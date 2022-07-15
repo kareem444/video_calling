@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { MAKE_CALL_PAGE } from '../../../../constants/string_constants'
+import { CHECK_CALL_PAGE } from '../../../../constants/pages_strings_constants'
 
 function ListItemComponent({ user }) {
     const navigation = useNavigation()
@@ -9,7 +9,7 @@ function ListItemComponent({ user }) {
     return (
         <TouchableOpacity
             key={user.key}
-            onPress={() => navigation.navigate(MAKE_CALL_PAGE, { user })}
+            onPress={() => navigation.navigate(CHECK_CALL_PAGE, { user })}
         >
             <View style={styles.container}>
                 <Image

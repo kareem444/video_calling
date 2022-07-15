@@ -9,12 +9,11 @@ export default function InputComponent({
     autoFocus = false,
     secureTextEntry = false,
     keyboardType = 'default',
-    backgroundColor
 }) {
     return (
         <View>
             <TextInput
-                style={{ ...styles.input , backgroundColor }}
+                style={styles.input }
                 value={value}
                 defaultValue={defaultValue ?? ''}
                 placeholder={name ?? 'input'}
@@ -22,6 +21,7 @@ export default function InputComponent({
                 autoFocus={autoFocus}
                 secureTextEntry={secureTextEntry}
                 keyboardType={keyboardType}
+                placeholderTextColor='#ccc'
             />
         </View>
     )
@@ -32,6 +32,9 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 10,
         borderRadius: 5,
-        backgroundColor: '#DFDEDE',
+        backgroundColor: '#fff',
+        color: '#000',
     },
 })
+
+

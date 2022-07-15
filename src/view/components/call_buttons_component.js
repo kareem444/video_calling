@@ -3,54 +3,62 @@ import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
-import CallingService from '../../service/calling_service'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from '../style/make_call_style'
+import CallService from '../../service/call_service'
+import { useRoute } from '@react-navigation/native'
+import { MAKE_CALL_PAGE } from '../../constants/pages_strings_constants'
 
 export default function CallButtonsComponent() {
     const dispatch = useDispatch()
-    const calling_reducer = useSelector(state => state.calling_reducer)
+    const call_reducer = useSelector(state => state.call_reducer)
+
+    const route = useRoute()
+
+    const isMakeCallPage = route.name === MAKE_CALL_PAGE
 
     return (
         <View style={styles.fotterContainer}>
-            <View style={styles.topIcon}>
-                <SimpleLineIcons name='arrow-up' size={35} color='#B8B8B8' />
-            </View>
-            <View style={styles.buttonsContainer}>
-                <TouchableOpacity
-                    style={styles.iconContainer}
-                    onPress={() => CallingService.switchCamera(dispatch)}
-                >
-                    <Ionicons name='camera-reverse' size={35} color='#fff' />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.iconContainer}
-                    onPress={() => CallingService.stopCamera(dispatch)}
-                >
-                    <FontAwesome5
-                        name={calling_reducer.stopCamera ? 'video' : 'video-slash'}
-                        size={25}
-                        color='#fff'
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.iconContainer}
-                    onPress={() => CallingService.mute(dispatch)}
-                >
-                    <Ionicons
-                        name={calling_reducer.mute ? 'mic' : 'mic-off-sharp'}
-                        size={35}
-                        color='#fff'
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={{ ...styles.iconContainer, backgroundColor: '#D23000' }}
-                    onPress={() => CallingService.endCall(dispatch)}
-                >
-                    <MaterialIcons name='call-end' size={35} color='#fff' />
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+                style={styles.iconContainer}
+                onPress={() =>
+                    CallService.switchCamera(dispatch, call_reducer.isFrontCamera)
+                }>
+                <Ionicons name='camera-reverse' size={35} color='#fff' />
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={{
+                    ...styles.iconContainer,
+                    backgroundColor: isMakeCallPage ? '#343434' : '#646464',
+                }}
+                onPress={() =>
+                    CallService.stopCamera(dispatch, call_reducer.isCameraStopped)
+                }
+                disabled={isMakeCallPage}>
+                <FontAwesome5
+                    name={call_reducer.isCameraStopped ? 'video-slash' : 'video'}
+                    size={25}
+                    color={isMakeCallPage ? '#A7A7A7' : '#fff'}
+                />
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={{
+                    ...styles.iconContainer,
+                    backgroundColor: isMakeCallPage ? '#343434' : '#646464',
+                }}
+                onPress={() => CallService.mute(dispatch, call_reducer.isMicMuted)}
+                disabled={isMakeCallPage}>
+                <Ionicons
+                    name={call_reducer.isMicMuted ? 'mic-off-sharp' : 'mic'}
+                    size={35}
+                    color={isMakeCallPage ? '#A7A7A7' : '#fff'}
+                />
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={{ ...styles.iconContainer, backgroundColor: '#D23000' }}
+                onPress={() => CallService.hangUp(dispatch)}>
+                <MaterialIcons name='call-end' size={35} color='#fff' />
+            </TouchableOpacity>
         </View>
     )
 }

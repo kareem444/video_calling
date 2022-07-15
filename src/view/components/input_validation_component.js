@@ -31,6 +31,9 @@ export default function InputValidationComponent({
                         placeholder={placeholder}
                         keyboardType={keyboardType}
                         secureTextEntry={name === 'password'}
+                        blurOnSubmitt={true}
+                        placeholderTextColor='#ccc'
+                        
                     />
                 )}
                 name={name}
@@ -46,6 +49,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 10,
         margin: 10,
+        color: '#000',
     },
     error: {
         color: 'red',

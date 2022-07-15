@@ -2,12 +2,12 @@ import {
     configureStore
 } from '@reduxjs/toolkit';
 
-import users_reducer from './reducers/users_reducer';
-import calling_reducer from './reducers/calling_reducer';
+import user_reducer from './reducers/users_reducer';
+import call_reducer from './reducers/calling_reducer';
 
 export default configureStore({
     reducer: {
-        users_reducer,
-        calling_reducer
+        user_reducer,
+        call_reducer
     },
 });
